@@ -117,7 +117,11 @@ class PostmarkClient:
         return response
 
     def _call(self, method, root, endpoint, data=None, headers=None, **kwargs):
-        default_headers = {"Accept": "application/json", "User-Agent": USER_AGENT}
+        default_headers = {
+            "Accept": "application/json",
+            "User-Agent": USER_AGENT,
+            "Content-Type": "application/json"
+        }
         if headers:
             default_headers.update(headers)
         url = urljoin(root, endpoint)

@@ -123,11 +123,17 @@ class BaseEmail(Model):
         :return:
         """
         data = super().as_dict()
-        data["Headers"] = [{"Name": name, "Value": value} for name, value in data["Headers"].items()]
+        if data["Headers"]:
+            data["Headers"] = [{"Name": name, "Value": value} for name, value in data["Headers"].items()]
+        else:
+            data.pop("Headers", None)
         for field in ("To", "Cc", "Bcc"):
             if field in data:
                 data[field] = list_to_csv(data[field])
-        data["Attachments"] = [prepare_attachments(attachment) for attachment in data["Attachments"]]
+        if data["Attachments"]:
+            data["Attachments"] = [prepare_attachments(attachment) for attachment in data["Attachments"]]
+        else:
+            data.pop("Attachments", None)
         return data
 
     def attach(self, *payloads):
