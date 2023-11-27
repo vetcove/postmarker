@@ -125,7 +125,7 @@ class PostmarkClient:
         if headers:
             default_headers.update(headers)
         url = urljoin(root, endpoint)
-        self.logger.debug("Request: %s %s, Data: %s", method, url, data)
+        self.logger.debug(f"Request: {method=} {url=}, {data=}")
         response = self.session.request(
             method,
             url,
@@ -134,7 +134,7 @@ class PostmarkClient:
             headers=default_headers,
             timeout=self.timeout,
         )
-        self.logger.debug("Response: %s", response.text)
+        self.logger.debug(f"{response.text=}")
         self.check_response(response)
         return response.json()
 
